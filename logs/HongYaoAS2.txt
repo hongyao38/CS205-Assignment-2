@@ -1,0 +1,10 @@
+B1 puts bread 0
+B2 puts bread 0
+B1 puts bread 1
+B2 puts bread 1
+B1 puts bread 2
+E0 puts egg 0
+E1 puts egg 0
+E0 puts egg 1
+E1 puts egg 1
+S1 packs sandwich 0 with bread 1 from B1 and egg 0 from E1 and bread 1 from B2
