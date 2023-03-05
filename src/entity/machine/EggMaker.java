@@ -27,28 +27,26 @@ public class EggMaker {
         };
     }
 
+    public int getTotalProduced() {
+        return eggID;
+    }
 
-    public synchronized void produceEgg() {
+
+    public void produceEgg() {
         while (totalProduced < EGGS_TO_PRODUCE) {
+            totalProduced++;
 
             // Simulate action (wait time)
             Util.goWork(eggRate);
 
             // Egg has been cooked
             Egg egg = new Egg(eggID++, this);
-            
-            // Wait for empty slot in egg pool
-            while (Manager.eggPool.isFull()) {
-                try { this.wait(); } catch (InterruptedException e) {}
-            }
 
             // Put egg into egg pool
-            Manager.eggPool.push(egg);
+            try { Manager.eggPool.push(egg); } catch (InterruptedException e) {}
 
             // Log entry
             Manager.LOGGER.write(String.format("E%d puts egg %d", id, egg.id));
-            totalProduced++;
-            this.notifyAll();
         }
     }
 }

@@ -27,9 +27,14 @@ public class BreadMaker {
         };
     }
 
+    public int getTotalProduced() {
+        return breadID;
+    }
 
-    public synchronized void produceBread() {
+
+    public void produceBread() {
         while (totalProduced < BREADS_TO_PRODUCE) {
+            totalProduced++;
 
             // Simulate action (wait time)
             Util.goWork(breadRate);
@@ -37,18 +42,11 @@ public class BreadMaker {
             // Bread finished toasting
             Bread bread = new Bread(breadID++, this);
 
-            // Wait for empty slot in bread pool
-            while (Manager.breadPool.isFull()) {
-                try { this.wait(); } catch (InterruptedException e) {}
-            }
-
             // Add bread to bread pool
-            Manager.breadPool.push(bread);
+            try { Manager.breadPool.push(bread); } catch (InterruptedException e) {}
 
             // Log entry
             Manager.LOGGER.write(String.format("B%d puts bread %d", id, bread.id));
-            totalProduced++;
-            this.notifyAll();
         }
     }
 }

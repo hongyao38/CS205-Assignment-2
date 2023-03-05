@@ -3,8 +3,8 @@ package resource;
 @SuppressWarnings("unchecked")
 public class Pool<T> {
     
-    public T[] queue;
     private final int CAPACTIY;
+    private volatile T[] queue;
     private volatile int numItems;
     private volatile int head;
     private volatile int tail;
@@ -24,22 +24,27 @@ public class Pool<T> {
         return numItems == CAPACTIY;
     }
 
-    public boolean push(T item) {
-        if (isFull()) 
-            return false;
+    public int getItems() {
+        return numItems;
+    }
+
+    public synchronized void push(T item) throws InterruptedException {
+        while (isFull()) 
+            this.wait();
         
         queue[tail++ % CAPACTIY] = item;
         numItems++;
-        return true;
+        this.notifyAll();
     }
 
-    public T pop() {
-        if (isEmpty())
-            return null;
+    public synchronized T pop() throws InterruptedException {
+        while (isEmpty())
+            this.wait();
         
         numItems--;
         T popped = queue[head];
         head = (head + 1) % CAPACTIY;
+        this.notifyAll();
         return popped;
     }
 
