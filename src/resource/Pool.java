@@ -12,20 +12,14 @@ public class Pool<T> {
     public Pool(int capacity) {
         CAPACTIY = capacity;
         queue = (T[])new Object[CAPACTIY];
-        head = 0;
-        tail = 0;
     }
 
-    public boolean isEmpty() {
+    private boolean isEmpty() {
         return numItems == 0;
     }
 
-    public boolean isFull() {
+    private boolean isFull() {
         return numItems == CAPACTIY;
-    }
-
-    public int getItems() {
-        return numItems;
     }
 
     public synchronized void push(T item) throws InterruptedException {

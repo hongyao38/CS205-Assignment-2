@@ -30,8 +30,7 @@ public class SandwichPacker {
     }
 
     public void packSandwich() {
-        while (Manager.totalPacked < Manager.N_SANDWICHES) {
-            Manager.totalPacked++;
+        while (Manager.totalPacked++ < Manager.N_SANDWICHES) {
             
             // Simulate do work (wait time)
             Util.goWork(packingRate);
@@ -40,7 +39,6 @@ public class SandwichPacker {
             Bread firstSlice = null;
             Egg egg = null;
             Bread secondSlice = null;
-
             try {
                 while (firstSlice == null)
                     firstSlice = Manager.breadPool.pop();

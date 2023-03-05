@@ -7,8 +7,7 @@ import resource.Util;
 public class BreadMaker {
 
     private static int makerID = 0;
-    private volatile static int totalProduced = 0;
-    private static final int BREADS_TO_PRODUCE = Manager.N_SANDWICHES * 2;
+    private static volatile int totalProduced = 0;
 
     public int id;
     public Runnable producer;
@@ -33,8 +32,7 @@ public class BreadMaker {
 
 
     public void produceBread() {
-        while (totalProduced < BREADS_TO_PRODUCE) {
-            totalProduced++;
+        while (totalProduced++ < Manager.N_SANDWICHES * 2) {
 
             // Simulate action (wait time)
             Util.goWork(breadRate);

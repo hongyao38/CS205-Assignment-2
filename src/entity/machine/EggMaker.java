@@ -6,9 +6,8 @@ import resource.Util;
 
 public class EggMaker {
     
-    public static int makerID = 0;
-    private volatile static int totalProduced = 0;
-    private static final int EGGS_TO_PRODUCE = Manager.N_SANDWICHES;
+    private static int makerID = 0;
+    private static volatile int totalProduced = 0;
 
     public int id;
     public Runnable producer;
@@ -33,8 +32,7 @@ public class EggMaker {
 
 
     public void produceEgg() {
-        while (totalProduced < EGGS_TO_PRODUCE) {
-            totalProduced++;
+        while (totalProduced++ < Manager.N_SANDWICHES) {
 
             // Simulate action (wait time)
             Util.goWork(eggRate);

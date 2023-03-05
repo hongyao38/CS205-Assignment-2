@@ -1,1 +1,1 @@
-./compile.bat && java -cp classes app.Manager 10 4 4 3 3 3 3 5 4
+javac -d classes -cp src src/app/Manager.java && java -cp classes app.Manager 10 4 4 3 3 3 3 5 4
