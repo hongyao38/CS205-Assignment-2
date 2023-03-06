@@ -103,6 +103,7 @@ public class Manager {
         }
     }
 
+    
     private static void logHeader(String[] args) {
         LOGGER.write("sandwiches: " + args[0]);
         LOGGER.write("bread capacity: " + args[1]);

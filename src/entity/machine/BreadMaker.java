@@ -26,11 +26,20 @@ public class BreadMaker {
         };
     }
 
+    /**
+     * Returns the number of bread the machine produced
+     * 
+     * @return number of bread produced
+     */
     public int getTotalProduced() {
         return breadID;
     }
 
 
+    /**
+     * Produce bread till number of bread needed is reached
+     * Logs each entry of bread production
+     */
     public void produceBread() {
         while (totalProduced++ < Manager.N_SANDWICHES * 2) {
 

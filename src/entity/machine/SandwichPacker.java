@@ -35,7 +35,7 @@ public class SandwichPacker {
             // Simulate do work (wait time)
             Util.goWork(packingRate);
             
-            // Start packing
+            // Start packing 2 bread + 1 egg
             Bread firstSlice = null;
             Egg egg = null;
             Bread secondSlice = null;

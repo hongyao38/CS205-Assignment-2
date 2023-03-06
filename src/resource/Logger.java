@@ -19,11 +19,18 @@ public class Logger {
 
         } catch (FileNotFoundException e) {
             System.out.println("Could not create log file");
+
         } catch (IOException e) {
             System.out.println("Could not create /logs directory");
         }
     }
 
+
+    /**
+     * Takes in a piece of text and log it to output file
+     * 
+     * @param text message to be logged
+     */
     public void write(String text) {
         logger.println(text);
     }

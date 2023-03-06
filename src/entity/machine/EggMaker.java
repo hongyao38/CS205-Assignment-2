@@ -26,11 +26,21 @@ public class EggMaker {
         };
     }
 
+
+    /**
+     * Returns the number of eggs produced by the machine
+     * 
+     * @return number of egg produced
+     */
     public int getTotalProduced() {
         return eggID;
     }
 
 
+    /**
+     * Produce egg till number of egg needed is reached
+     * Logs each entry of egg production
+     */
     public void produceEgg() {
         while (totalProduced++ < Manager.N_SANDWICHES) {
 
