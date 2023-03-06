@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Logger {
-    
+
     private PrintStream logger;
 
     public Logger(String outputFileName) {
@@ -25,13 +25,12 @@ public class Logger {
         }
     }
 
-
     /**
      * Takes in a piece of text and log it to output file
      * 
      * @param text message to be logged
      */
-    public void write(String text) {
+    public void log(String text) {
         logger.println(text);
     }
 

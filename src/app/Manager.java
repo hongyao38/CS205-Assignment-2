@@ -20,7 +20,7 @@ public class Manager {
 
         // Insufficient arguments given
         if (args.length < 9) {
-            LOGGER.write("Insufficient arguments given!");
+            LOGGER.log("Insufficient arguments given!");
             return;
         }
 
@@ -54,15 +54,15 @@ public class Manager {
         // Create threads for bread and egg makers
         for (int i = 0; i < N_BREAD_MAKERS; i++) {
             breadMakers[i] = new BreadMaker(BREAD_RATE);
-            breadMakerThreads[i] = new Thread(breadMakers[i].producer);
+            breadMakerThreads[i] = new Thread(breadMakers[i].threadRunnable);
         }
         for (int i = 0; i < N_EGG_MAKERS; i++) {
             eggMakers[i] = new EggMaker(EGG_RATE);
-            eggMakerThreads[i] = new Thread(eggMakers[i].producer);
+            eggMakerThreads[i] = new Thread(eggMakers[i].threadRunnable);
         }
         for (int i = 0; i < N_SANDWICH_PACKERS; i++) {
             sandwichPackers[i] = new SandwichPacker(PACKING_RATE);
-            sandwichPackerThreads[i] = new Thread(sandwichPackers[i].consumer);
+            sandwichPackerThreads[i] = new Thread(sandwichPackers[i].threadRunnable);
         }
 
         // Start thread
@@ -75,45 +75,58 @@ public class Manager {
 
         // Join threads
         for (int i = 0; i < N_BREAD_MAKERS; i++)
-            try { breadMakerThreads[i].join(); } catch (InterruptedException e) {}
+            try {
+                breadMakerThreads[i].join();
+            } catch (InterruptedException e) {
+            }
         for (int i = 0; i < N_EGG_MAKERS; i++)
-            try { eggMakerThreads[i].join(); } catch (InterruptedException e) {}
+            try {
+                eggMakerThreads[i].join();
+            } catch (InterruptedException e) {
+            }
         for (int i = 0; i < N_SANDWICH_PACKERS; i++)
-            try { sandwichPackerThreads[i].join(); } catch (InterruptedException e) {}
-
+            try {
+                sandwichPackerThreads[i].join();
+            } catch (InterruptedException e) {
+            }
 
         // Wait for packing to be done
-        while (totalPacked < N_SANDWICHES);
+        while (totalPacked < N_SANDWICHES)
+            ;
 
         // Log summary
-        LOGGER.write("\nsummary:");
+        LOGGER.log("\nsummary:");
         for (int i = 0; i < N_BREAD_MAKERS; i++) {
             BreadMaker b = breadMakers[i];
-            LOGGER.write(String.format("B%d makes %d", b.id, b.getTotalProduced()));
+            LOGGER.log(String.format("B%d makes %d", b.id, b.getTotalFoodOutput()));
         }
 
         for (int i = 0; i < N_EGG_MAKERS; i++) {
             EggMaker e = eggMakers[i];
-            LOGGER.write(String.format("E%d makes %d", e.id, e.getTotalProduced()));
+            LOGGER.log(String.format("E%d makes %d", e.id, e.getTotalFoodOutput()));
         }
 
         for (int i = 0; i < N_SANDWICH_PACKERS; i++) {
             SandwichPacker s = sandwichPackers[i];
-            LOGGER.write(String.format("S%d packs %d", s.id, s.getTotalPacked()));
+            LOGGER.log(String.format("S%d packs %d", s.id, s.getTotalFoodOutput()));
         }
     }
 
-    
+    /**
+     * Logs the parameters of the program
+     * 
+     * @param args an array of parameters, outlining sandwiches to make, etc
+     */
     private static void logHeader(String[] args) {
-        LOGGER.write("sandwiches: " + args[0]);
-        LOGGER.write("bread capacity: " + args[1]);
-        LOGGER.write("egg capacity: " + args[2]);
-        LOGGER.write("bread makers: " + args[3]);
-        LOGGER.write("egg makers: " + args[4]);
-        LOGGER.write("sandwich packers: " + args[5]);
-        LOGGER.write("bread rate: " + args[6]);
-        LOGGER.write("egg rate: " + args[7]);
-        LOGGER.write("packing rate: " + args[8]);
-        LOGGER.write("");
+        LOGGER.log("sandwiches: " + args[0]);
+        LOGGER.log("bread capacity: " + args[1]);
+        LOGGER.log("egg capacity: " + args[2]);
+        LOGGER.log("bread makers: " + args[3]);
+        LOGGER.log("egg makers: " + args[4]);
+        LOGGER.log("sandwich packers: " + args[5]);
+        LOGGER.log("bread rate: " + args[6]);
+        LOGGER.log("egg rate: " + args[7]);
+        LOGGER.log("packing rate: " + args[8]);
+        LOGGER.log("");
     }
 }
